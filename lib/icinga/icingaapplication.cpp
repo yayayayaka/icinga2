@@ -163,6 +163,12 @@ void IcingaApplication::DumpModifiedAttributes()
 {
 	String path = Configuration::ModAttrPath;
 
+	try {
+		Utility::Glob(path + ".*", &Utility::Remove, GlobFile);
+	} catch (const std::exception& ex) {
+		Log(LogWarning, "ConfigObject") << ex.what();
+	}
+
 	std::fstream fp;
 	String tempFilename = Utility::CreateTempFile(path + ".XXXXXX", 0644, fp);
 	fp.exceptions(std::ofstream::failbit | std::ofstream::badbit);
