@@ -36,10 +36,19 @@ private:
 	T m_Data{0};
 };
 
-void Checkable::UpdateFlappingStatus(bool stateChange)
+void Checkable::UpdateFlappingStatus(ServiceState newState)
 {
 	Bitset<unsigned long> stateChangeBuf = GetFlappingBuffer();
 	int oldestIndex = GetFlappingIndex();
+
+	ServiceState lastState = GetFlappingLastState();
+	bool stateChange = false;
+
+	// Only check for state changes, if the new state is not UNKNOWN with FlappingIgnoreUnknown enabled.
+	if (!(GetFlappingIgnoreUnknown() && newState == ServiceUnknown)) {
+		stateChange = newState != lastState;
+		SetFlappingLastState(newState);
+	}
 
 	stateChangeBuf.Modify(oldestIndex, stateChange);
 	oldestIndex = (oldestIndex + 1) % 20;

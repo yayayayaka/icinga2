@@ -73,6 +73,10 @@ abstract class Checkable : CustomVarObject
 		default {{{ return true; }}}
 	};
 
+	[config] bool flapping_ignore_unknown {
+			default {{{ return false; }}}
+	};
+
 	[config, deprecated] double flapping_threshold;
 
 	[config] double flapping_threshold_low {
@@ -163,6 +167,7 @@ abstract class Checkable : CustomVarObject
 	};
 	[state] Timestamp flapping_last_change;
 
+	[state, no_user_view, no_user_modify] ServiceState flapping_last_state;
 	[state, no_user_view, no_user_modify] int flapping_buffer;
 	[state, no_user_view, no_user_modify] int flapping_index;
 	[state, protected] bool flapping;

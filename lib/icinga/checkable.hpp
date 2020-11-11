@@ -222,7 +222,7 @@ private:
 	void GetAllChildrenInternal(std::set<Checkable::Ptr>& children, int level = 0) const;
 
 	/* Flapping */
-	void UpdateFlappingStatus(bool stateChange);
+	void UpdateFlappingStatus(ServiceState newState);
 };
 
 }
