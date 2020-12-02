@@ -415,7 +415,7 @@ void ApiEvents::GetProcessResultHelper(const ConfigObject::Ptr &object, const Ev
 	if (queues.empty() && !inboxes)
 		return;
 
-	Log(LogDebug, "ApiEvents", "Processing event type '" + eventQueue + "'.");
+	Log(LogDebug, "ApiEvents") << "Processing event type '" + eventQueue + "'.";
 
 	Dictionary::Ptr result = new Dictionary ({
 	     {"type", eventQueue},
