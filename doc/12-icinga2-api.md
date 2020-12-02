@@ -1571,6 +1571,9 @@ The following event stream types are available:
   DowntimeRemoved        | Downtime removed for hosts and services.
   DowntimeStarted        | Downtime started for hosts and services.
   DowntimeTriggered      | Downtime triggered for hosts and services.
+  ObjectCreated          | Object created for all Icinga2 objects.
+  ObjectDeleted          | Object deleted for all Icinga2 objects.
+  ObjectModified         | Object modified for all Icinga2 objects.
 
 Note: Each type requires [API permissions](12-icinga2-api.md#icinga2-api-permissions)
 being set.
@@ -1581,6 +1584,14 @@ Example for all downtime events:
 &types=DowntimeAdded&types=DowntimeRemoved&types=DowntimeTriggered
 
 -d '{ "types": ["DowntimeAdded", "DowntimeRemoved", "DowntimeTriggered"] }'
+```
+
+Example for all object events:
+
+```
+&types=ObjectCreated&types=ObjectDeleted&types=ObjectModified
+
+-d '{ "types": ["ObjectCreated", "ObjectDeleted", "ObjectModified"] }'
 ```
 
 #### <a id="icinga2-api-event-streams-type-checkresult"></a> Event Stream Type: CheckResult
