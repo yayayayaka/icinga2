@@ -72,8 +72,10 @@ Value RequestCertificateHandler(const MessageOrigin::Ptr& origin, const Dictiona
 		 * serial number. */
 		time_t forceRenewalEnd = 1483228800; /* January 1st, 2017 */
 		time_t renewalStart = now + 30 * 24 * 60 * 60;
+		auto crtExpired = X509_get0_notBefore(cert.get()) + 397 * 24 * 60 * 60;
 
-		if (X509_cmp_time(X509_get_notBefore(cert.get()), &forceRenewalEnd) != -1 && X509_cmp_time(X509_get_notAfter(cert.get()), &renewalStart) != -1) {
+		if ((X509_cmp_time(X509_get_notBefore(cert.get()), &forceRenewalEnd) != -1 && X509_cmp_time(X509_get_notAfter(cert.get()), &renewalStart) != -1)
+			|| X509_get0_notAfter(cert.get()) >= crtExpired) {
 
 			Log(LogInformation, "JsonRpcConnection")
 				<< "The certificate for CN '" << cn << "' is valid and uptodate. Skipping automated renewal.";
